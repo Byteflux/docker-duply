@@ -5,7 +5,7 @@ LABEL maintainer="byte@byteflux.net"
 ENV DOCKER_VERSION=18.06.1-ce \
     GOOGLE_DRIVE_SETTINGS=/etc/duply/pydrive.yml
 
-RUN apk add --update curl duply py2-pip mariadb-client && \
+RUN apk add --update curl gawk grep duply py2-pip mariadb-client && \
     pip install PyDrive && \
     curl -o docker.tgz "https://download.docker.com/linux/static/stable/x86_64/docker-$DOCKER_VERSION.tgz" && \
     tar xzf docker.tgz --strip-components=1 -C /usr/bin && \
