@@ -1,0 +1,18 @@
+index 9c2bbf3..66da1f2 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -33,7 +33,13 @@ AM_CFLAGS = -Wall -Icompat @EVENTINC@
+ overloaddir = $(libdir)
+ overload_DATA = libtrickle.so
+
+-libtrickle.so: trickle-overload.c atomicio.c
++libtrickle.so: trickle-overload.lo atomicio.lo
++	$(LIBTOOL) --mode=link $(CC) $(CFLAGS) -o libtmp$@.la \
++		-rpath $(libdir)/trickle trickle-overload.lo atomicio.lo $(LIBS) \
++		$(LDFLAGS) -module -avoid-version -nostdlib -ldl
++	@rm -f libtmp$@.la tmp$@.so* $@
++	@cp .libs/libtmp$@.so $@
++	@rm -f .libs/libtmp$@.*
+ $(overload_DATA):
+
+ CLEANFILES = *.so
